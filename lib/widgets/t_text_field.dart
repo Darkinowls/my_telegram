@@ -39,7 +39,7 @@ class _TTextFieldState extends State<TTextField> {
       cursorColor: Colors.white,
       decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          fillColor: const Color(0xFF3d444b),
+          fillColor: const Color.fromRGBO(61, 68, 75, 1),
           filled: true,
           hintText: widget._hintText,
           hintStyle: const TextStyle(color: Colors.grey),
@@ -47,7 +47,8 @@ class _TTextFieldState extends State<TTextField> {
               borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide.none),
           suffixIcon: widget._textController.text.isNotEmpty
-              ? TextButton(
+              ?
+          TextButton(
                   style: TextButton.styleFrom(
                       shape: const CircleBorder(),
                       foregroundColor: Colors.grey),
@@ -57,6 +58,13 @@ class _TTextFieldState extends State<TTextField> {
                     color: Colors.grey,
                     widget._icon,
                   ))
+
+          // IconButton(onPressed: widget._function, icon: Icon(
+          //   color: Colors.grey,
+          //   widget._icon,
+          // ))
+
+
               : null),
       style: const TextStyle(
         color: Colors.white,

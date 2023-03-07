@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:my_telegram/widgets/t_text_field.dart';
 
@@ -120,7 +122,7 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(
               color:
                   (selectedChatIndex == index) ? Colors.white : Colors.grey)),
-      leading: const Icon(Icons.account_circle_rounded, size: 40),
+      leading: const Icon(Icons.account_circle_rounded, size: 40, color: Colors.white),
       trailing: Column(children: [
         Text(
           lastMessage.getCreatedDate(),
@@ -137,7 +139,7 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: [
         Ink(
-          color: const Color(0xFF282f36),
+          color: const Color.fromRGBO(40, 47, 54, 1),
           height: 68,
           child: ListTile(
             leading: IconButton(
@@ -185,7 +187,7 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: buildMessageList),
         ),
         Ink(
-            color: const Color(0xFF3d444b),
+            color: const Color.fromRGBO(61, 68, 75, 1),
             child: TTextField(
                 icon: Icons.send,
                 function: () {
@@ -206,11 +208,11 @@ class _HomePageState extends State<HomePage> {
     Chat chat = chatList[selectedChatIndex!];
     Message message = chat.messages[chat.messages.length - 1 - index];
     return Container(
-      padding: const EdgeInsets.only(right: 100, top: 10),
+      padding: EdgeInsets.only(right: width/10, top: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Icon(Icons.account_circle_rounded, size: 36),
+          const Icon(Icons.account_circle_rounded, size: 36, color: Colors.white,),
           const SizedBox(width: 10),
           Flexible(
             child: Container(

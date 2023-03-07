@@ -5,8 +5,7 @@ void main() {
   runApp(
     MaterialApp(
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF282F36),
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color.fromRGBO(40, 47, 54, 1),
         inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(
             color: Colors.white,
