@@ -1,16 +1,10 @@
-# my_telegram
+# My telegram client 
 
-My telegram implemention in flutter
+It's available for all the platforms you know!
 
-## Getting Started
+## Preview (Windows)
 
-This project is a starting point for a Flutter application.
+![img.png](windows_preview.png)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Preview (Android)
+![img.png](android_preview.png)

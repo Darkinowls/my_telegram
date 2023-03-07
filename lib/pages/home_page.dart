@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:my_telegram/widgets/t_text_field.dart';
 
@@ -48,6 +46,9 @@ class _HomePageState extends State<HomePage> {
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
       body: Row(
         children: [
           if ((width <= 600 && selectedChatIndex == null) || width > 600)

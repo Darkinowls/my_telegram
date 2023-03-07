@@ -6,6 +6,9 @@ void main() {
     MaterialApp(
       theme: ThemeData(
         scaffoldBackgroundColor: const Color.fromRGBO(40, 47, 54, 1),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Colors.transparent,
+        ),
         inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(
             color: Colors.white,
