@@ -56,7 +56,6 @@ class _HomePageState extends State<HomePage> {
                 flex: 2,
                 child: Column(children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
                         onPressed: () {},
@@ -123,7 +122,8 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(
               color:
                   (selectedChatIndex == index) ? Colors.white : Colors.grey)),
-      leading: const Icon(Icons.account_circle_rounded, size: 40, color: Colors.white),
+      leading: const Icon(Icons.account_circle_rounded,
+          size: 40, color: Colors.white),
       trailing: Column(children: [
         Text(
           lastMessage.getCreatedDate(),
@@ -139,42 +139,61 @@ class _HomePageState extends State<HomePage> {
     Chat chat = chatList[selectedChatIndex!];
     return Column(
       children: [
-        Ink(
-          color: const Color.fromRGBO(40, 47, 54, 1),
-          height: 68,
-          child: ListTile(
-            leading: IconButton(
-              onPressed: () {
-                setState(() {
-                  selectedChatIndex = null;
-                });
-              },
-              icon: const Icon(Icons.arrow_back, color: Colors.grey),
-            ),
-            subtitle: const Text("last seen recently",
-                style: TextStyle(color: Colors.grey)),
-            onTap: () {},
-            title: Text(chat.name, style: const TextStyle(color: Colors.white)),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
+        InkWell(
+          onTap: () {},
+          child: Ink(
+            color: const Color.fromRGBO(40, 47, 54, 1),
+            height: 68,
+            padding: const EdgeInsets.all(10),
+            child: Row(
               children: [
-                if (width > 350)
-                  Flexible(
-                    child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.search, color: Colors.grey)),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      selectedChatIndex = null;
+                    });
+                  },
+                  icon: const Icon(Icons.arrow_back, color: Colors.grey),
+                ),
+                const SizedBox(width: 25),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(chat.name,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 16)),
+                    const Text("last seen recently",
+                        style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (width > 350)
+                        Flexible(
+                          child: IconButton(
+                              onPressed: () {},
+                              icon:
+                                  const Icon(Icons.search, color: Colors.grey)),
+                        ),
+                      if (width > 350)
+                        Flexible(
+                          child: IconButton(
+                              onPressed: () {},
+                              icon:
+                                  const Icon(Icons.phone, color: Colors.grey)),
+                        ),
+                      Flexible(
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.more_vert,
+                                color: Colors.grey)),
+                      ),
+                    ],
                   ),
-                if (width > 350)
-                  Flexible(
-                    child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.phone, color: Colors.grey)),
-                  ),
-                Flexible(
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.more_vert, color: Colors.grey)),
                 ),
               ],
             ),
@@ -209,11 +228,14 @@ class _HomePageState extends State<HomePage> {
     Chat chat = chatList[selectedChatIndex!];
     Message message = chat.messages[chat.messages.length - 1 - index];
     return Container(
-      padding: EdgeInsets.only(right: width/10, top: 10),
+      padding: EdgeInsets.only(right: width / 10, top: 10),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Icon(Icons.account_circle_rounded, size: 36, color: Colors.white,),
+          const Icon(
+            Icons.account_circle_rounded,
+            size: 36,
+            color: Colors.white,
+          ),
           const SizedBox(width: 10),
           Flexible(
             child: Container(
