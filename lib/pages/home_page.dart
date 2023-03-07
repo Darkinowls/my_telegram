@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   TextEditingController searchController = TextEditingController();
   TextEditingController messageController = TextEditingController();
-  double? width;
+  double width = 1000;
   List<Chat> chatList = [];
   int? selectedChatIndex;
 
@@ -43,42 +43,43 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Row(
         children: [
-
           if ((width <= 600 && selectedChatIndex == null) || width > 600)
-          Expanded(
-              flex: 2,
-              child: Column(children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.menu,
-                        color: Colors.grey,
+            Expanded(
+                flex: 2,
+                child: Column(children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.grey,
+                        ),
+                        padding: const EdgeInsets.all(20),
+                        iconSize: 25,
                       ),
-                      padding: const EdgeInsets.all(20),
-                      iconSize: 25,
-                    ),
-                    Expanded(
-                        child: Container(
-                            padding: const EdgeInsets.only(
-                                top: 10, bottom: 10, right: 20),
-                            child: TTextField(
-                                icon: Icons.close,
-                                function: searchController.clear,
-                                textController: searchController,
-                                hintText: 'Search')))
-                  ],
-                ),
-                Expanded(
-                    child: ListView.builder(
-                        itemCount: chatList.length, itemBuilder: buildChatList))
-              ])),
+                      Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 10, bottom: 10, right: 20),
+                              child: TTextField(
+                                  icon: Icons.close,
+                                  function: searchController.clear,
+                                  textController: searchController,
+                                  hintText: 'Search')))
+                    ],
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                          itemCount: chatList.length,
+                          itemBuilder: buildChatList))
+                ])),
           if ((width <= 600 && selectedChatIndex != null) || width > 600)
             Expanded(
               flex: 3,
@@ -136,39 +137,46 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: [
         Ink(
-            color: const Color(0xFF282f36),
-            height: 68,
-            child: ListTile(
-              leading: IconButton(
-                onPressed: () {
-                  setState(() {
-                    selectedChatIndex = null;
-                  });
-                },
-                icon: const Icon(Icons.arrow_back, color: Colors.grey),
-              ),
-              subtitle: const Text("last seen recently",
-                  style: TextStyle(color: Colors.grey)),
-              onTap: () {},
-              title:
-                  Text(chat.name, style: const TextStyle(color: Colors.white)),
-              trailing: SizedBox(
-                width: 120,
-                child: Row(
-                  children: [
-                    IconButton(
+          color: const Color(0xFF282f36),
+          height: 68,
+          child: ListTile(
+            leading: IconButton(
+              onPressed: () {
+                setState(() {
+                  selectedChatIndex = null;
+                });
+              },
+              icon: const Icon(Icons.arrow_back, color: Colors.grey),
+            ),
+            subtitle: const Text("last seen recently",
+                style: TextStyle(color: Colors.grey)),
+            onTap: () {},
+            title: Text(chat.name, style: const TextStyle(color: Colors.white)),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (width > 350)
+                  Flexible(
+                    child: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.search, color: Colors.grey)),
-                    IconButton(
+                  ),
+                if (width > 350)
+                  Flexible(
+                    child: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.phone, color: Colors.grey)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.more_vert, color: Colors.grey)),
-                  ],
+                  ),
+                Flexible(
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.more_vert, color: Colors.grey)),
                 ),
-              ),
-            )),
+              ],
+            ),
+          ),
+        ),
         Flexible(
           child: ListView.builder(
               reverse: true,
@@ -205,13 +213,18 @@ class _HomePageState extends State<HomePage> {
           const Icon(Icons.account_circle_rounded, size: 36),
           const SizedBox(width: 10),
           Flexible(
-            fit: FlexFit.loose,
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color.fromRGBO(53, 60, 67, 1),
-              ),
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromRGBO(53, 60, 67, 1),
+                  boxShadow: const [
+                    BoxShadow(
+                      spreadRadius: -5,
+                      blurRadius: 10,
+                      offset: Offset(10, 10),
+                    )
+                  ]),
               child: Stack(children: [
                 Container(
                   padding: const EdgeInsets.only(right: 50, bottom: 5),
