@@ -1,17 +1,27 @@
-import 'package:my_telegram/entities/message.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:my_telegram/entities/entity.dart';
 
-class Chat {
-  String name;
-  final List<Message> _messages;
+import 'contact.dart';
+import 'message.dart';
 
-  Chat(this.name, this._messages);
+class Chat extends Entity {
 
-  Message getLastMessage(){
-    return _messages.last;
+  late String name;
+  late final List<Contact> members;
+  final List<Message> messages;
+  TextEditingController messageController = TextEditingController();
 
+  Chat.private({required Contact contact, required this.messages}) {
+    name = contact.name;
+    members = [contact];
   }
 
-  List<Message> get messages => _messages;
+  Chat.group(
+      {required this.members, this.name = "New Group", required this.messages}){
+  }
+  // Chat.privateTest
 
-
+  Message getLastMessage() {
+    return messages.last;
+  }
 }

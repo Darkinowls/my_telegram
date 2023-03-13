@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_telegram/pages/home_page.dart';
+import 'package:my_telegram/layouts/desktop_layout.dart';
+import 'package:my_telegram/layouts/responsive_layout.dart';
+
+import 'layouts/mobile_layout.dart';
 
 void main() {
   runApp(
     MaterialApp(
-      theme: ThemeData(
+      theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color.fromRGBO(40, 47, 54, 1),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Colors.transparent,
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        primaryColor: Colors.teal,
+        iconTheme: const IconThemeData(color: Colors.grey),
+        appBarTheme: const AppBarTheme(color: Colors.transparent),
       ),
-      home: const HomePage(),
+      home: const ResponsiveLayout(),
       debugShowCheckedModeBanner: false,
     ),
   );

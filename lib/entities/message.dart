@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 
-class Message {
+import 'entity.dart';
+
+class Message extends Entity {
   String _text;
   final DateTime _created;
   final bool _isMine;
