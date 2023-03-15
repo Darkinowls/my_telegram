@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_telegram/layouts/desktop_layout.dart';
-import 'package:my_telegram/layouts/responsive_layout.dart';
-
-import 'layouts/mobile_layout.dart';
+import 'mobile/mobile_app.dart';
 
 void main() {
   runApp(
@@ -10,11 +7,14 @@ void main() {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color.fromRGBO(40, 47, 54, 1),
         primaryColor: Colors.teal,
+        primaryColorLight: Colors.tealAccent,
         iconTheme: const IconThemeData(color: Colors.grey),
-        appBarTheme: const AppBarTheme(color: Colors.transparent),
+        appBarTheme: const AppBarTheme(color: Color.fromRGBO(40, 47, 54, 1)),
       ),
-      home: const ResponsiveLayout(),
+      home:  MobileApp(),
       debugShowCheckedModeBanner: false,
     ),
   );
 }
+
+

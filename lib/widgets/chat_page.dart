@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../entities/chat.dart';
+import '../entities/abstract/chat.dart';
 import '../entities/message.dart';
 import 't_text_field.dart';
 
 class ChatPage extends StatefulWidget {
   final Chat? chat;
-  final Function() onBackButton;
+  final Function(Chat) sendMessage;
 
   const ChatPage({
     required this.chat,
     Key? key,
-    required this.onBackButton,
+    required this.sendMessage,
   }) : super(key: key);
 
   @override
@@ -34,56 +34,6 @@ class _ChatPageState extends State<ChatPage> {
     Chat chat = widget.chat!;
     return Column(
       children: [
-        InkWell(
-          onTap: () {},
-          child: Ink(
-            color: const Color.fromRGBO(40, 47, 54, 1),
-            height: 68,
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 5,
-                ),
-                IconButton(
-                  onPressed: widget.onBackButton,
-                  icon: const Icon(Icons.arrow_back, color: Colors.grey),
-                ),
-                const SizedBox(width: 25),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(chat.name, style: const TextStyle(fontSize: 16)),
-                    const Text("last seen recently",
-                        style: TextStyle(color: Colors.grey)),
-                  ],
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: IconButton(
-                            onPressed: () {}, icon: const Icon(Icons.search)),
-                      ),
-                      Flexible(
-                        child: IconButton(
-                            onPressed: () {}, icon: const Icon(Icons.phone)),
-                      ),
-                      Flexible(
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.more_vert)),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
         Flexible(
           child: ListView.builder(
               reverse: true,
@@ -95,13 +45,7 @@ class _ChatPageState extends State<ChatPage> {
           color: const Color.fromRGBO(61, 68, 75, 1),
           child: TTextField(
               icon: Icons.send,
-              function: () {
-                setState(() {
-                  chat.messages.add(
-                      Message(chat.messageController.text, DateTime.now()));
-                  chat.messageController.clear();
-                });
-              },
+              function: () => setState(() => widget.sendMessage(chat)),
               textController: chat.messageController,
               hintText: "Write a message..."),
         ),
@@ -110,8 +54,9 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget buildMessageList(BuildContext context, int index) {
-    Message message =
+    Message? message =
         widget.chat!.messages[widget.chat!.messages.length - 1 - index];
+    if (message == null) return const SizedBox.shrink();
     return Container(
       padding: const EdgeInsets.only(right: 100, top: 10),
       child: Row(

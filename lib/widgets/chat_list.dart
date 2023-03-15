@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
-import '../entities/chat.dart';
+import '../entities/abstract/chat.dart';
+import '../entities/contact.dart';
 import '../entities/message.dart';
 
 class ChatList extends StatefulWidget {
-  final List<Chat> chatList;
+  final List<Contact> contacts;
+  final Function(Contact contact) onTap;
   final Chat? selectedChat;
-  final Function clickOnTile;
 
   const ChatList(
       {Key? key,
-      required this.chatList,
-      required this.selectedChat,
-      required this.clickOnTile})
+      required this.onTap,
+      required this.contacts,
+      this.selectedChat})
       : super(key: key);
 
   @override
@@ -20,27 +21,40 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
+  final List<Chat?> chatList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    chatList.addAll(widget.contacts.map((e) => e.privateChat));
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.chatList.length,
+      itemCount: chatList.length,
       itemBuilder: buildChatList,
     );
   }
 
   Widget buildChatList(BuildContext context, int index) {
-    Chat currentChat = widget.chatList[index];
+    Chat? currentChat = chatList[index];
+    if (currentChat == null) return const SizedBox.shrink();
+    Message? lastMessage = currentChat.getLastMessage();
     String drafted = currentChat.messageController.text;
-    Message lastMessage = currentChat.getLastMessage();
-    String text = (drafted.isNotEmpty) ? drafted : lastMessage.text;
-    String createdDate = lastMessage.getCreatedDate();
+    String text = lastMessage?.text ?? "The person joined in Telegram";
+    if (drafted.isNotEmpty) {
+      text = drafted;
+    }
+    String? createdDate = lastMessage?.getCreatedDate();
     bool isChatSelected = widget.selectedChat == currentChat;
 
     return ListTile(
-      onTap: () => setState(() => widget.clickOnTile(currentChat)),
+      onTap: () => setState(() => widget.onTap(widget.contacts[index])),
       selectedTileColor: Theme.of(context).primaryColor,
       selected: isChatSelected,
-      title: Text(currentChat.name),
+      leading: const Icon(Icons.account_circle_rounded, size: 40),
+      title: Text(currentChat.name!),
       selectedColor: Colors.white,
       subtitle: Row(
         children: [
@@ -54,17 +68,19 @@ class _ChatListState extends State<ChatList> {
             child: Text(
               text,
               overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: (lastMessage != null) ? Colors.grey : Colors.white),
             ),
           ),
         ],
       ),
-      leading: const Icon(Icons.account_circle_rounded, size: 40),
       trailing: Column(children: [
-        Text(
-          createdDate,
-          style:
-              TextStyle(color: (isChatSelected) ? Colors.white : Colors.grey),
-        )
+        if (createdDate != null)
+          Text(
+            createdDate,
+            style:
+                TextStyle(color: (isChatSelected) ? Colors.white : Colors.grey),
+          )
       ]),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
     );

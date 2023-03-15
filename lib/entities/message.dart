@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-import 'entity.dart';
+import 'abstract/entity.dart';
 
 class Message extends Entity {
   String _text;

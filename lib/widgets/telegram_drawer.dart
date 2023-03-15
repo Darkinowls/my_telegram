@@ -17,10 +17,11 @@ class _TelegramDrawerState extends State<TelegramDrawer> {
     return Drawer(
       child: ListView(
         children: [
-          const UserAccountsDrawerHeader(
-              accountEmail: Text("@userTag"),
-              accountName: Text("User nickname"),
-              currentAccountPicture: CircleAvatar(
+          UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+              accountEmail: const Text("@userTag"),
+              accountName: const Text("User nickname"),
+              currentAccountPicture: const CircleAvatar(
                 backgroundColor: Colors.white,
                 backgroundImage: NetworkImage(
                   'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
