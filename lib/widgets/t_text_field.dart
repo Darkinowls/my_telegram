@@ -23,14 +23,6 @@ class TTextField extends StatefulWidget {
 }
 
 class _TTextFieldState extends State<TTextField> {
-  @override
-  void initState() {
-    super.initState();
-
-    widget._textController.addListener(() {
-      setState(() {});
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

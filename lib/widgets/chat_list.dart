@@ -50,7 +50,13 @@ class _ChatListState extends State<ChatList> {
     bool isChatSelected = widget.selectedChat == currentChat;
 
     return ListTile(
-      onTap: () => setState(() => widget.onTap(widget.contacts[index])),
+      onTap: () {
+        widget.contacts[index].privateChat!.messageController.addListener(() {
+          setState(() {
+          });
+        });
+        widget.onTap(widget.contacts[index]);
+      },
       selectedTileColor: Theme.of(context).primaryColor,
       selected: isChatSelected,
       leading: const Icon(Icons.account_circle_rounded, size: 40),

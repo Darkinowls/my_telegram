@@ -19,6 +19,16 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+
+  @override
+  void initState() {
+    widget.chat?.messageController.addListener(() {
+      setState(() {
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Ink.image(
@@ -45,7 +55,7 @@ class _ChatPageState extends State<ChatPage> {
           color: const Color.fromRGBO(61, 68, 75, 1),
           child: TTextField(
               icon: Icons.send,
-              function: () => setState(() => widget.sendMessage(chat)),
+              function: () => widget.sendMessage(chat),
               textController: chat.messageController,
               hintText: "Write a message..."),
         ),

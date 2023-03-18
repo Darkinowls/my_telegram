@@ -42,6 +42,9 @@ class _MobileAppState extends State<MobileApp>
   void initState() {
     super.initState();
     contacts.addAll([amogus, war, secondOne, chatLessDude]);
+    searchController.addListener(() {
+      setState(() {});
+    });
     tabs.addAll([
       ChatList(
         contacts: contacts,
