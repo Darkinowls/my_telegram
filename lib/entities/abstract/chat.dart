@@ -6,7 +6,7 @@ import '../message.dart';
 abstract class Chat extends Entity {
   late String? name;
   final List<Message?> messages;
-  TextEditingController messageController = TextEditingController();
+  String? drafted;
 
   Chat({this.name, required this.messages});
 

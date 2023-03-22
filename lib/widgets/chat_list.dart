@@ -41,20 +41,13 @@ class _ChatListState extends State<ChatList> {
     Chat? currentChat = chatList[index];
     if (currentChat == null) return const SizedBox.shrink();
     Message? lastMessage = currentChat.getLastMessage();
-    String drafted = currentChat.messageController.text;
+    String? drafted = currentChat.drafted;
     String text = lastMessage?.text ?? "The person joined in Telegram";
-    if (drafted.isNotEmpty) {
-      text = drafted;
-    }
     String? createdDate = lastMessage?.getCreatedDate();
     bool isChatSelected = widget.selectedChat == currentChat;
 
     return ListTile(
       onTap: () {
-        widget.contacts[index].privateChat!.messageController.addListener(() {
-          setState(() {
-          });
-        });
         widget.onTap(widget.contacts[index]);
       },
       selectedTileColor: Theme.of(context).primaryColor,
@@ -64,15 +57,14 @@ class _ChatListState extends State<ChatList> {
       selectedColor: Colors.white,
       subtitle: Row(
         children: [
-          if (drafted.isNotEmpty)
-            Text(
+          if (drafted != null)
+            const Text(
               "Draft: ",
-              style:
-                  TextStyle(color: isChatSelected ? Colors.white : Colors.red),
+              style: TextStyle(color: Colors.red),
             ),
           Expanded(
             child: Text(
-              text,
+              drafted ?? text,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   color: (lastMessage != null) ? Colors.grey : Colors.white),

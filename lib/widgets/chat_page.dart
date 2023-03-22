@@ -6,12 +6,13 @@ import 't_text_field.dart';
 
 class ChatPage extends StatefulWidget {
   final Chat? chat;
-  final Function(Chat) sendMessage;
+  final Function(String) sendMessage;
+  final Function(String?) setDrafted;
 
   const ChatPage({
     required this.chat,
     Key? key,
-    required this.sendMessage,
+    required this.sendMessage, required this.setDrafted,
   }) : super(key: key);
 
   @override
@@ -19,14 +20,22 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  Chat? chat;
 
   @override
   void initState() {
-    widget.chat?.messageController.addListener(() {
-      setState(() {
-      });
-    });
+    chat = widget.chat;
     super.initState();
+  }
+
+  void setDrafted(String? text) {
+    widget.setDrafted(text);
+    setState(() {});
+  }
+
+  void sendMessage(String text) {
+    widget.sendMessage(text);
+    setState(() {});
   }
 
   @override
@@ -37,27 +46,27 @@ class _ChatPageState extends State<ChatPage> {
         fit: BoxFit.cover,
         height: double.infinity,
         width: double.infinity,
-        child: widget.chat == null ? null : buildChat(context));
+        child: chat == null ? null : buildChat(context));
   }
 
   Widget buildChat(BuildContext context) {
-    Chat chat = widget.chat!;
     return Column(
       children: [
         Flexible(
           child: ListView.builder(
               reverse: true,
               padding: const EdgeInsets.all(20),
-              itemCount: chat.messages.length,
+              itemCount: chat!.messages.length,
               itemBuilder: buildMessageList),
         ),
         Ink(
           color: const Color.fromRGBO(61, 68, 75, 1),
           child: TTextField(
-              icon: Icons.send,
-              function: () => widget.sendMessage(chat),
-              textController: chat.messageController,
-              hintText: "Write a message..."),
+              buttonIcon: Icons.send,
+              onButton: sendMessage,
+              onDrafted: setDrafted,
+              hintText: "Write a message...",
+              text: chat?.drafted),
         ),
       ],
     );

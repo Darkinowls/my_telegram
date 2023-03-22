@@ -32,19 +32,19 @@ class _MobileAppState extends State<MobileApp>
 
   void setChat(Chat? chat) => setState(() => selectedChat = chat);
 
-  void sendMessage(Chat chat) {
-    chat.messages.add(Message(chat.messageController.text, DateTime.now()));
-    chat.messageController.clear();
+  void sendMessage(Chat chat, String text) {
+    chat.messages.add(Message(text, DateTime.now()));
     setState(() {});
+  }
+
+  void setDrafted(Chat chat, String? text) {
+    chat.drafted = text;
   }
 
   @override
   void initState() {
     super.initState();
     contacts.addAll([amogus, war, secondOne, chatLessDude]);
-    searchController.addListener(() {
-      setState(() {});
-    });
     tabs.addAll([
       ChatList(
         contacts: contacts,
@@ -89,8 +89,9 @@ class _MobileAppState extends State<MobileApp>
           ),
         ),
         body: ChatPage(
-          sendMessage: sendMessage,
+          sendMessage: (String text) => sendMessage(contact.privateChat!, text),
           chat: contact.privateChat!,
+          setDrafted: (String? text) => setDrafted(contact.privateChat!, text),
         ),
       );
     }));
@@ -101,16 +102,25 @@ class _MobileAppState extends State<MobileApp>
     return Scaffold(
       appBar: AppBar(
         title: TTextField(
-            icon: Icons.close,
-            function: searchController.clear,
-            textController: searchController,
-            hintText: 'Search'),
+          buttonIcon: Icons.close,
+          hintText: 'Search',
+          onButton: (String text) =>
+              setState(() => searchController.text = text),
+          onDrafted: (String? text) =>
+              setState(() => searchController.text = text!),
+        ),
       ),
       drawer: const TelegramDrawer(),
-      body: TabBarView(
-        controller: tabController,
-        children: tabs,
+      body:
+      ChatList(
+        contacts: contacts,
+        selectedChat: selectedChat,
+        onTap: navigateToChat,
       ),
+      // TabBarView(
+      //   controller: tabController,
+      //   children: tabs,
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => setState(() {
           tabIndex = 1;
