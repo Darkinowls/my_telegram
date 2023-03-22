@@ -28,11 +28,6 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
   }
 
-  void setDrafted(String? text) {
-    widget.setDrafted(text);
-    setState(() {});
-  }
-
   void sendMessage(String text) {
     widget.sendMessage(text);
     setState(() {});
@@ -64,7 +59,7 @@ class _ChatPageState extends State<ChatPage> {
           child: TTextField(
               buttonIcon: Icons.send,
               onButton: sendMessage,
-              onDrafted: setDrafted,
+              onDrafted: widget.setDrafted,
               hintText: "Write a message...",
               text: chat?.drafted),
         ),

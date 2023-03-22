@@ -30,17 +30,17 @@ class _TTextFieldState extends State<TTextField> {
       textEditingController.text = widget.text!;
     }
     textEditingController.addListener(() {
+      if (textEditingController.text.isNotEmpty) {
+        widget.onDrafted(textEditingController.text);
+      } else{
+        widget.onDrafted(null);
+      }
       setState(() {});
     });
   }
 
   @override
   void dispose() {
-    if (textEditingController.text.isNotEmpty) {
-      widget.onDrafted(textEditingController.text);
-    } else{
-      widget.onDrafted(null);
-    }
     textEditingController.dispose();
     super.dispose();
   }

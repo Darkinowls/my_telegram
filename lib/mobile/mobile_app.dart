@@ -28,7 +28,7 @@ class _MobileAppState extends State<MobileApp>
   Chat? selectedChat;
   final List<Contact> contacts = [];
   int tabIndex = 0;
-  final List<Widget> tabs = [];
+  final List<BottomNavigationBarItem> tabs = [];
 
   void setChat(Chat? chat) => setState(() => selectedChat = chat);
 
@@ -39,29 +39,33 @@ class _MobileAppState extends State<MobileApp>
 
   void setDrafted(Chat chat, String? text) {
     chat.drafted = text;
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
     contacts.addAll([amogus, war, secondOne, chatLessDude]);
-    tabs.addAll([
-      ChatList(
-        contacts: contacts,
-        selectedChat: selectedChat,
-        onTap: navigateToChat,
-      ),
-      ContactList(
-        contacts: contacts,
-        onTap: navigateToContact,
-      ),
-      const SettingPage(),
-    ]);
+    tabs.addAll(
+      const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.message),
+          label: 'Chats',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.contact_mail_sharp),
+          label: 'Contacts',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: 'Settings',
+        ),
+      ],
+    );
     tabController = TabController(vsync: this, length: tabs.length);
     tabController.addListener(() {
-      setState(() {
-        tabIndex = tabController.index;
-      });
+      tabIndex = tabController.index;
+      setState(() {});
     });
   }
 
@@ -69,7 +73,8 @@ class _MobileAppState extends State<MobileApp>
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Scaffold(
+            builder: (context) =>
+                Scaffold(
                   appBar: AppBar(
                     title: const Text("User info"),
                   ),
@@ -112,42 +117,45 @@ class _MobileAppState extends State<MobileApp>
       ),
       drawer: const TelegramDrawer(),
       body:
-      ChatList(
-        contacts: contacts,
-        selectedChat: selectedChat,
-        onTap: navigateToChat,
-      ),
-      // TabBarView(
-      //   controller: tabController,
-      //   children: tabs,
+      // ChatList(
+      //   contacts: contacts,
+      //   selectedChat: selectedChat,
+      //   onTap: navigateToChat,
       // ),
+      TabBarView(
+        controller: tabController,
+        children:
+        [
+          Tab(
+              child: ChatList(
+                contacts: contacts,
+                selectedChat: selectedChat,
+                onTap: navigateToChat,
+              )),
+          Tab(
+              child: ContactList(
+                contacts: contacts,
+                onTap: navigateToContact,
+              )),
+          const Tab(child: SettingPage())
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() {
-          tabIndex = 1;
-          tabController.animateTo(tabIndex);
-        }),
+        onPressed: () =>
+            setState(() {
+              tabIndex = 1;
+              tabController.animateTo(tabIndex);
+            }),
         child: const Icon(Icons.mode),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Chats',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contact_mail_sharp),
-            label: 'Contacts',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
+        items: tabs,
         currentIndex: tabIndex,
-        onTap: (int index) => setState(() {
+        onTap: (int index) {
           tabIndex = index;
           tabController.animateTo(index);
-        }),
+          // setState((){});
+        },
       ),
     );
   }
