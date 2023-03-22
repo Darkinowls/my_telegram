@@ -24,7 +24,6 @@ class ChatList extends StatefulWidget {
 
 class _ChatListState extends State<ChatList> {
   final List<Chat?> chatList = [];
-  bool isVisible = true;
 
   @override
   void initState() {

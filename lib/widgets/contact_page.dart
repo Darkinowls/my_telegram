@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../entities/contact.dart';
 
-class ContactPage extends StatefulWidget {
+class ContactPage extends StatelessWidget {
   final Contact contact;
   final Function() onTap;
 
   const ContactPage({Key? key, required this.contact, required this.onTap})
       : super(key: key);
 
-  @override
-  State<ContactPage> createState() => _ContactPageState();
-}
-
-class _ContactPageState extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
     return Ink(
@@ -25,12 +20,12 @@ class _ContactPageState extends State<ContactPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Hero(
-                tag: "contact_${widget.contact.id}",
+                tag: "contact_${contact.id}",
                 child: const Icon(Icons.account_circle_rounded, size: 100),
               ),
               Expanded(
                 child: ListTile(
-                  title: Text(widget.contact.name),
+                  title: Text(contact.name),
                   subtitle: const Text("last seen recently"),
                 ),
               )
@@ -54,7 +49,7 @@ class _ContactPageState extends State<ContactPage> {
               leading: const SizedBox(),
               title: Text("SEND MESSAGE",
                   style: TextStyle(color: Theme.of(context).primaryColorLight)),
-              onTap: widget.onTap,
+              onTap: onTap,
             ),
           ]),
         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../entities/contact.dart';
 
-class ContactList extends StatefulWidget {
+class ContactList extends StatelessWidget {
   final List<Contact> contacts;
   final Function(Contact contact) onTap;
   final TextEditingController searchController;
@@ -15,25 +15,20 @@ class ContactList extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ContactList> createState() => _ContactListState();
-}
-
-class _ContactListState extends State<ContactList> {
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.contacts.length,
+      itemCount: contacts.length,
       itemBuilder: buildContactList,
     );
   }
 
   Widget buildContactList(BuildContext context, int index) {
-    Contact contact = widget.contacts[index];
+    Contact contact = contacts[index];
     return Visibility(
-      visible: widget.searchController.text.isEmpty ||
-          contact.name.contains(widget.searchController.text),
+      visible: searchController.text.isEmpty ||
+          contact.name.contains(searchController.text),
       child: ListTile(
-        onTap: () => widget.onTap(contact),
+        onTap: () => onTap(contact),
         leading: Hero(
             tag: "contact_${contact.id}",
             child: const Icon(Icons.account_circle_rounded, size: 40)),

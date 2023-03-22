@@ -8,8 +8,9 @@ class PopBackArrowButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.arrow_back),
       onPressed: () {
-        // Pop off all the screens until the first screen
-        Navigator.of(context).popUntil((route) => route.isFirst);
+        // setState(){} -- NO STATES
+        Navigator.of(context).popUntil(
+            (route) => route.isFirst); // pops off until the first screen
       },
     );
   }
