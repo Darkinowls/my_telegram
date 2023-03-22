@@ -15,7 +15,10 @@ import '../widgets/telegram_drawer.dart';
 import '../widgets/t_text_field.dart';
 
 class MobileApp extends StatefulWidget {
-  const MobileApp({Key? key}) : super(key: key);
+  final Function(bool setDark) setDark;
+  final bool isDark;
+
+  const MobileApp({required this.setDark, Key? key, required this.isDark}) : super(key: key);
 
   @override
   State<MobileApp> createState() => _MobileAppState();
@@ -82,10 +85,12 @@ class _MobileAppState extends State<MobileApp>
                       icon: const Icon(Icons.arrow_back),
                       onPressed: () {
                         // Pop off all the screens until the first screen
-                        Navigator.of(context).popUntil((route) => route.isFirst);
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
                       },
                     ),
-                    title: const Text("User info"),
+                    title:  Text("User info",
+                        style: TextStyle(color: Theme.of(context).focusColor)),
                   ),
                   body: ContactPage(
                       contact: contact, onTap: () => navigateToChat(contact)),
@@ -131,14 +136,8 @@ class _MobileAppState extends State<MobileApp>
           },
         ),
       ),
-      drawer: const TelegramDrawer(),
-      body:
-          // ChatList(
-          //   contacts: contacts,
-          //   selectedChat: selectedChat,
-          //   onTap: navigateToChat,
-          // ),
-          TabBarView(
+      drawer: TelegramDrawer(setDark: widget.setDark, isDark: widget.isDark),
+      body: TabBarView(
         controller: tabController,
         children: [
           Tab(
@@ -150,7 +149,8 @@ class _MobileAppState extends State<MobileApp>
           Tab(
               child: ContactList(
             contacts: contacts,
-            onTap: navigateToContact, searchController: searchController,
+            onTap: navigateToContact,
+            searchController: searchController,
           )),
           const Tab(child: SettingPage())
         ],

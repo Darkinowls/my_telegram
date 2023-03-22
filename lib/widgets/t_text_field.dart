@@ -49,10 +49,10 @@ class _TTextFieldState extends State<TTextField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: textEditingController,
-      cursorColor: Colors.white,
+      cursorColor: Theme.of(context).focusColor,
       decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          fillColor: const Color.fromRGBO(61, 68, 75, 1),
+          fillColor: Theme.of(context).scaffoldBackgroundColor,
           filled: true,
           hintText: widget.hintText,
           border: OutlineInputBorder(
@@ -61,14 +61,14 @@ class _TTextFieldState extends State<TTextField> {
           suffixIcon: textEditingController.text.isNotEmpty
               ? TextButton(
                   style: TextButton.styleFrom(
-                      shape: const CircleBorder(),
-                      foregroundColor: Colors.grey),
+                      shape: const CircleBorder()),
                   onPressed: () {
                     widget.onButton(textEditingController.text);
                     textEditingController.clear();
                   },
                   child: Icon(
                     widget.buttonIcon,
+                    color: Theme.of(context).primaryColor,
                   ))
               : null),
       style: const TextStyle(

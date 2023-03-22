@@ -55,7 +55,6 @@ class _ChatPageState extends State<ChatPage> {
               itemBuilder: buildMessageList),
         ),
         Ink(
-          color: const Color.fromRGBO(61, 68, 75, 1),
           child: TTextField(
               buttonIcon: Icons.send,
               onButton: sendMessage,
@@ -86,10 +85,10 @@ class _ChatPageState extends State<ChatPage> {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromRGBO(53, 60, 67, 1),
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   boxShadow: const [
                     BoxShadow(
-                      spreadRadius: -5,
+                      spreadRadius: -10,
                       blurRadius: 10,
                       offset: Offset(10, 10),
                     )

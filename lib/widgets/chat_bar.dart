@@ -17,7 +17,9 @@ class _ChatBarState extends State<ChatBar> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: widget.onTap,
-      title: Text(widget.chat.name!),
+      title: Text(widget.chat.name!, style: TextStyle(
+        color: Theme.of(context).focusColor
+      )),
       subtitle: const Text("last seen recently",
           style: TextStyle(color: Colors.grey)),
       trailing: Row(
