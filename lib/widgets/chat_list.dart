@@ -8,12 +8,14 @@ class ChatList extends StatefulWidget {
   final List<Contact> contacts;
   final Function(Contact contact) onTap;
   final Chat? selectedChat;
+  final TextEditingController searchController;
 
   const ChatList(
       {Key? key,
       required this.onTap,
       required this.contacts,
-      this.selectedChat})
+      this.selectedChat,
+      required this.searchController})
       : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class ChatList extends StatefulWidget {
 
 class _ChatListState extends State<ChatList> {
   final List<Chat?> chatList = [];
+  bool isVisible = true;
 
   @override
   void initState() {
@@ -46,41 +49,45 @@ class _ChatListState extends State<ChatList> {
     String? createdDate = lastMessage?.getCreatedDate();
     bool isChatSelected = widget.selectedChat == currentChat;
 
-    return ListTile(
-      onTap: () {
-        widget.onTap(widget.contacts[index]);
-      },
-      selectedTileColor: Theme.of(context).primaryColor,
-      selected: isChatSelected,
-      leading: const Icon(Icons.account_circle_rounded, size: 40),
-      title: Text(currentChat.name!),
-      selectedColor: Colors.white,
-      subtitle: Row(
-        children: [
-          if (drafted != null)
-            const Text(
-              "Draft: ",
-              style: TextStyle(color: Colors.red),
+    return Visibility(
+      visible: widget.searchController.text.isEmpty ||
+          currentChat.name!.contains(widget.searchController.text),
+      child: ListTile(
+        onTap: () {
+          widget.onTap(widget.contacts[index]);
+        },
+        selectedTileColor: Theme.of(context).primaryColor,
+        selected: isChatSelected,
+        leading: const Icon(Icons.account_circle_rounded, size: 40),
+        title: Text(currentChat.name!),
+        selectedColor: Colors.white,
+        subtitle: Row(
+          children: [
+            if (drafted != null)
+              const Text(
+                "Draft: ",
+                style: TextStyle(color: Colors.red),
+              ),
+            Expanded(
+              child: Text(
+                drafted ?? text,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: (lastMessage != null) ? Colors.grey : Colors.white),
+              ),
             ),
-          Expanded(
-            child: Text(
-              drafted ?? text,
-              overflow: TextOverflow.ellipsis,
+          ],
+        ),
+        trailing: Column(children: [
+          if (createdDate != null)
+            Text(
+              createdDate,
               style: TextStyle(
-                  color: (lastMessage != null) ? Colors.grey : Colors.white),
-            ),
-          ),
-        ],
+                  color: (isChatSelected) ? Colors.white : Colors.grey),
+            )
+        ]),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       ),
-      trailing: Column(children: [
-        if (createdDate != null)
-          Text(
-            createdDate,
-            style:
-                TextStyle(color: (isChatSelected) ? Colors.white : Colors.grey),
-          )
-      ]),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
     );
   }
 }

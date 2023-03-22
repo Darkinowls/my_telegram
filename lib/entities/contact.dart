@@ -4,7 +4,7 @@ import 'abstract/entity.dart';
 
 class Contact extends Entity {
   // photo?
-  late String name;
+  String name;
   late String? tag;
   late final String? phone;
   PrivateChat? _chat;

@@ -62,6 +62,9 @@ class _MobileAppState extends State<MobileApp>
         ),
       ],
     );
+    searchController.addListener(() {
+      setState(() {});
+    });
     tabController = TabController(vsync: this, length: tabs.length);
     tabController.addListener(() {
       tabIndex = tabController.index;
@@ -73,9 +76,15 @@ class _MobileAppState extends State<MobileApp>
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                Scaffold(
+            builder: (context) => Scaffold(
                   appBar: AppBar(
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        // Pop off all the screens until the first screen
+                        Navigator.of(context).popUntil((route) => route.isFirst);
+                      },
+                    ),
                     title: const Text("User info"),
                   ),
                   body: ContactPage(
@@ -88,6 +97,13 @@ class _MobileAppState extends State<MobileApp>
       contact.privateChat ??= PrivateChat(messages: []);
       return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              // Pop off all the screens until the first screen
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            },
+          ),
           title: ChatBar(
             chat: contact.privateChat!,
             onTap: () => navigateToContact(contact),
@@ -109,43 +125,41 @@ class _MobileAppState extends State<MobileApp>
         title: TTextField(
           buttonIcon: Icons.close,
           hintText: 'Search',
-          onButton: (String text) =>
-              setState(() => searchController.text = text),
-          onDrafted: (String? text) =>
-              setState(() => searchController.text = text!),
+          onButton: (String text) {},
+          onDrafted: (String? text) {
+            searchController.text = text ?? "";
+          },
         ),
       ),
       drawer: const TelegramDrawer(),
       body:
-      // ChatList(
-      //   contacts: contacts,
-      //   selectedChat: selectedChat,
-      //   onTap: navigateToChat,
-      // ),
-      TabBarView(
+          // ChatList(
+          //   contacts: contacts,
+          //   selectedChat: selectedChat,
+          //   onTap: navigateToChat,
+          // ),
+          TabBarView(
         controller: tabController,
-        children:
-        [
+        children: [
           Tab(
               child: ChatList(
-                contacts: contacts,
-                selectedChat: selectedChat,
-                onTap: navigateToChat,
-              )),
+                  contacts: contacts,
+                  selectedChat: selectedChat,
+                  onTap: navigateToChat,
+                  searchController: searchController)),
           Tab(
               child: ContactList(
-                contacts: contacts,
-                onTap: navigateToContact,
-              )),
+            contacts: contacts,
+            onTap: navigateToContact, searchController: searchController,
+          )),
           const Tab(child: SettingPage())
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            setState(() {
-              tabIndex = 1;
-              tabController.animateTo(tabIndex);
-            }),
+        onPressed: () => setState(() {
+          tabIndex = 1;
+          tabController.animateTo(tabIndex);
+        }),
         child: const Icon(Icons.mode),
       ),
       bottomNavigationBar: BottomNavigationBar(
