@@ -35,7 +35,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Ink.image(
+    return
+      Ink.image(
         image: const NetworkImage(
             'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
         fit: BoxFit.cover,

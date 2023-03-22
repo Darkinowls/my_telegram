@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'mobile/mobile_app.dart';
+import 'package:my_telegram/screens/home_screen.dart';
 
 void main() {
-  runApp(const MyTelegram());
+  runApp(const MobileApp());
 }
 
-class MyTelegram extends StatefulWidget {
-  const MyTelegram({Key? key}) : super(key: key);
+class MobileApp extends StatefulWidget {
+  const MobileApp({Key? key}) : super(key: key);
 
   @override
-  State<MyTelegram> createState() => _MyTelegramState();
+  State<MobileApp> createState() => _MobileAppState();
 }
 
-class _MyTelegramState extends State<MyTelegram> {
+class _MobileAppState extends State<MobileApp> {
   bool isDark = true;
 
-  void setDark(bool setDark) {
-    isDark = setDark;
+  void switchDarkMode() {
+    isDark = !isDark;
     setState(() {});
   }
 
@@ -44,7 +44,7 @@ class _MyTelegramState extends State<MyTelegram> {
                 color: Colors.white70,
               ),
             ),
-      home: MobileApp(setDark: setDark, isDark: isDark),
+      home: HomeScreen(switchDarkMode: switchDarkMode, isDark: isDark),
       debugShowCheckedModeBanner: false,
     );
   }

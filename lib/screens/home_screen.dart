@@ -5,26 +5,27 @@ import '../entities/abstract/chat.dart';
 import '../entities/message.dart';
 import '../entities/private_chat.dart';
 import '../entities/contact.dart';
-import '../widgets/chat_bar.dart';
 import '../widgets/chat_list.dart';
-import '../widgets/chat_page.dart';
 import '../widgets/contact_list.dart';
-import '../widgets/contact_page.dart';
 import '../widgets/setting_page.dart';
 import '../widgets/telegram_drawer.dart';
 import '../widgets/t_text_field.dart';
+import 'chat_screen.dart';
+import 'contact_screen.dart';
 
-class MobileApp extends StatefulWidget {
-  final Function(bool setDark) setDark;
+class HomeScreen extends StatefulWidget {
+  final Function() switchDarkMode;
   final bool isDark;
 
-  const MobileApp({required this.setDark, Key? key, required this.isDark}) : super(key: key);
+  const HomeScreen(
+      {required this.switchDarkMode, Key? key, required this.isDark})
+      : super(key: key);
 
   @override
-  State<MobileApp> createState() => _MobileAppState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _MobileAppState extends State<MobileApp>
+class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   TextEditingController searchController = TextEditingController();
@@ -79,46 +80,22 @@ class _MobileAppState extends State<MobileApp>
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Scaffold(
-                  appBar: AppBar(
-                    leading: IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: () {
-                        // Pop off all the screens until the first screen
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
-                      },
-                    ),
-                    title:  Text("User info",
-                        style: TextStyle(color: Theme.of(context).focusColor)),
-                  ),
-                  body: ContactPage(
-                      contact: contact, onTap: () => navigateToChat(contact)),
+            builder: (context) => ContactScreen(
+                  setDrafted: setDrafted,
+                  sendMessage: sendMessage,
+                  contact: contact,
+                  navigateToChat: navigateToChat,
                 )));
   }
 
   void navigateToChat(Contact contact) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       contact.privateChat ??= PrivateChat(messages: []);
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              // Pop off all the screens until the first screen
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            },
-          ),
-          title: ChatBar(
-            chat: contact.privateChat!,
-            onTap: () => navigateToContact(contact),
-          ),
-        ),
-        body: ChatPage(
-          sendMessage: (String text) => sendMessage(contact.privateChat!, text),
-          chat: contact.privateChat!,
-          setDrafted: (String? text) => setDrafted(contact.privateChat!, text),
-        ),
+      return ChatScreen(
+        setDrafted: setDrafted,
+        sendMessage: sendMessage,
+        contact: contact,
+        navigateToContact: navigateToContact,
       );
     }));
   }
@@ -136,7 +113,8 @@ class _MobileAppState extends State<MobileApp>
           },
         ),
       ),
-      drawer: TelegramDrawer(setDark: widget.setDark, isDark: widget.isDark),
+      drawer: TelegramDrawer(
+          switchDarkMode: widget.switchDarkMode, isDark: widget.isDark),
       body: TabBarView(
         controller: tabController,
         children: [

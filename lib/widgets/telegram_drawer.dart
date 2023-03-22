@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
 
-class TelegramDrawer extends StatefulWidget {
-  final Function(bool) setDark;
+class TelegramDrawer extends StatelessWidget {
+  final Function() switchDarkMode;
   final bool isDark;
-  const TelegramDrawer({Key? key, required this.setDark, required this.isDark}) : super(key: key);
 
-  @override
-  State<TelegramDrawer> createState() => _TelegramDrawerState();
-}
-
-class _TelegramDrawerState extends State<TelegramDrawer> {
-  late bool isNightMode;
-
-  @override
-  void initState() {
-    isNightMode = widget.isDark;
-    super.initState();
-  }
-
-  void switchNightMode() {
-    isNightMode = !isNightMode;
-    widget.setDark(isNightMode);
-    setState(() {});
-  }
+  const TelegramDrawer({Key? key, required this.switchDarkMode, required this.isDark})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +38,11 @@ class _TelegramDrawerState extends State<TelegramDrawer> {
             title: const Text("Settings"),
           ),
           ListTile(
-            onTap: switchNightMode,
+            onTap: switchDarkMode,
             leading: const Icon(Icons.nightlight_outlined),
             title: const Text("Night mode"),
             trailing: Switch(
-                value: isNightMode,
-                onChanged: (bool value) => switchNightMode()),
+                value: isDark, onChanged: (bool value) => switchDarkMode()),
           ),
         ],
       ),
