@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:my_telegram/models/dark_mode_model.dart';
+import 'package:provider/provider.dart';
 
 class TelegramDrawer extends StatelessWidget {
-  final Function() switchDarkMode;
-  final bool isDark;
+  const TelegramDrawer({Key? key}) : super(key: key);
 
-  const TelegramDrawer({Key? key, required this.switchDarkMode, required this.isDark})
-      : super(key: key);
+  DarkModeModel provideDarkModeModel(BuildContext context){
+    return Provider.of<DarkModeModel>(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +40,13 @@ class TelegramDrawer extends StatelessWidget {
             title: const Text("Settings"),
           ),
           ListTile(
-            onTap: switchDarkMode,
+            onTap: provideDarkModeModel(context).switchDarkMode,
             leading: const Icon(Icons.nightlight_outlined),
             title: const Text("Night mode"),
             trailing: Switch(
-                value: isDark, onChanged: (bool value) => switchDarkMode()),
+                value: provideDarkModeModel(context).isDark,
+                onChanged: (bool value) =>
+                    provideDarkModeModel(context).switchDarkMode()),
           ),
         ],
       ),

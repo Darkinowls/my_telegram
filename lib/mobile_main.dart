@@ -1,51 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:my_telegram/screens/home_screen.dart';
+import 'package:my_telegram/models/dark_mode_model.dart';
+import 'package:my_telegram/routing/apt_routes.dart';
+import 'package:provider/provider.dart';
+
+import 'models/contacts_model.dart';
+import 'models/search_model.dart';
 
 void main() {
-  runApp(const MobileApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => DarkModeModel()),
+      ChangeNotifierProvider(create: (_) => SearchModel()),
+      ChangeNotifierProvider(create: (_) => ContactsModel()),
+    ], child: const MobileApp()),
+  );
 }
 
-class MobileApp extends StatefulWidget {
+class MobileApp extends StatelessWidget {
   const MobileApp({Key? key}) : super(key: key);
 
   @override
-  State<MobileApp> createState() => _MobileAppState();
-}
-
-class _MobileAppState extends State<MobileApp> {
-  bool isDark = true;
-
-  void switchDarkMode() {
-    isDark = !isDark;
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: isDark
-          ? ThemeData.dark().copyWith(
-              scaffoldBackgroundColor: const Color.fromRGBO(48, 55, 62, 1),
-              focusColor: Colors.white,
-              primaryColor: Colors.teal,
-              primaryColorLight: Colors.tealAccent,
-              iconTheme: const IconThemeData(color: Colors.grey),
-              appBarTheme: const AppBarTheme(
+    return Consumer<DarkModeModel>(
+      builder: (context, darkModeModel, child) => MaterialApp(
+        theme: darkModeModel.isDark
+            ? ThemeData.dark().copyWith(
+                scaffoldBackgroundColor: const Color.fromRGBO(48, 55, 62, 1),
+                focusColor: Colors.white,
+                primaryColor: Colors.teal,
+                primaryColorLight: Colors.tealAccent,
+                iconTheme: const IconThemeData(color: Colors.grey),
+                appBarTheme: const AppBarTheme(
+                    iconTheme: IconThemeData(color: Colors.grey),
+                    color: Color.fromRGBO(40, 47, 54, 1)),
+              )
+            : ThemeData(
+                scaffoldBackgroundColor: Colors.white,
+                focusColor: Colors.black,
+                primarySwatch: Colors.teal,
+                primaryColorLight: Colors.tealAccent,
+                appBarTheme: const AppBarTheme(
                   iconTheme: IconThemeData(color: Colors.grey),
-                  color: Color.fromRGBO(40, 47, 54, 1)),
-            )
-          : ThemeData(
-              scaffoldBackgroundColor: Colors.white,
-              focusColor: Colors.black,
-              primarySwatch: Colors.teal,
-              primaryColorLight: Colors.tealAccent,
-              appBarTheme: const AppBarTheme(
-                iconTheme: IconThemeData(color: Colors.grey),
-                color: Colors.white70,
+                  color: Colors.white70,
+                ),
               ),
-            ),
-      home: HomeScreen(switchDarkMode: switchDarkMode, isDark: isDark),
-      debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: AppRoutes.getRoutes(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

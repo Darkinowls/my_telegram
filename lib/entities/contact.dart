@@ -11,9 +11,9 @@ class Contact extends Entity {
 
   Contact({required this.name, this.tag, this.phone});
 
-  PrivateChat? get privateChat => _chat;
+  PrivateChat? get chat => _chat;
 
-  set privateChat(PrivateChat? value) {
+  set chat(PrivateChat? value) {
     _chat = value;
     _chat?.name ??= name;
   }

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../entities/contact.dart';
+import '../models/contacts_model.dart';
 
 class ContactPage extends StatelessWidget {
-  final Contact contact;
-  final Function() onTap;
-
-  const ContactPage({Key? key, required this.contact, required this.onTap})
-      : super(key: key);
+  const ContactPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,20 +13,22 @@ class ContactPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Hero(
-                tag: "contact_${contact.id}",
-                child: const Icon(Icons.account_circle_rounded, size: 100),
-              ),
-              Expanded(
-                child: ListTile(
-                  title: Text(contact.name),
-                  subtitle: const Text("last seen recently"),
+          child: Consumer<ContactsModel>(
+            builder: (context, contactsModel, _) => Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Hero(
+                  tag: "contact_${contactsModel.selectedContact!.id}",
+                  child: const Icon(Icons.account_circle_rounded, size: 100),
                 ),
-              )
-            ],
+                Expanded(
+                  child: ListTile(
+                    title: Text(contactsModel.selectedContact!.name),
+                    subtitle: const Text("last seen recently"),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         Container(
@@ -49,7 +48,7 @@ class ContactPage extends StatelessWidget {
               leading: const SizedBox(),
               title: Text("SEND MESSAGE",
                   style: TextStyle(color: Theme.of(context).primaryColorLight)),
-              onTap: onTap,
+              onTap: () => Navigator.pushReplacementNamed(context, "/chat"),
             ),
           ]),
         ),
