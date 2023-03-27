@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:my_telegram/entities/private_chat.dart';
 
 import '../database/contacts.dart';
 import '../entities/contact.dart';
@@ -11,6 +12,12 @@ class ContactsModel extends ChangeNotifier {
   List<Contact> get contacts => _contacts;
 
   Contact? get selectedContact => _selectedContact;
+
+  void createSelectedContactChatIfNotExists() {
+    if (_selectedContact?.chat != null) return;
+    _selectedContact?.chat = PrivateChat(messages: []);
+    notifyListeners();
+  }
 
   void addContact(Contact contact) {
     _contacts.add(contact);

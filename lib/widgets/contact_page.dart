@@ -45,11 +45,14 @@ class ContactPage extends StatelessWidget {
               onTap: () {},
             ),
             ListTile(
-              leading: const SizedBox(),
-              title: Text("SEND MESSAGE",
-                  style: TextStyle(color: Theme.of(context).primaryColorLight)),
-              onTap: () => Navigator.pushReplacementNamed(context, "/chat"),
-            ),
+                leading: const SizedBox(),
+                title: Text("SEND MESSAGE",
+                    style:
+                        TextStyle(color: Theme.of(context).primaryColorLight)),
+                onTap: () {
+                  Provider.of<ContactsModel>(context, listen: false).createSelectedContactChatIfNotExists();
+                  Navigator.pushReplacementNamed(context, "/chat");
+                }),
           ]),
         ),
         Ink(

@@ -37,7 +37,10 @@ class _ContactListState extends State<ContactList> {
         visible:
             searchModel.text.isEmpty || contact.name.contains(searchModel.text),
         child: ListTile(
-          onTap: () => Navigator.pushReplacementNamed(context, "/chat"),
+          onTap: () {
+            contactsModel.setSelectedContactByIndex(index);
+            Navigator.pushReplacementNamed(context, "/contact");
+          },
           leading: Hero(
               tag: "contact_${contact.id}",
               child: const Icon(Icons.account_circle_rounded, size: 40)),

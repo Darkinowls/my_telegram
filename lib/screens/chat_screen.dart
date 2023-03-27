@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../entities/abstract/chat.dart';
-import '../entities/contact.dart';
 import '../widgets/chat_bar.dart';
 import '../widgets/chat_page.dart';
 import '../widgets/pop_back_arrow.dart';
