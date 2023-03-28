@@ -7,7 +7,7 @@ import '../screens/home_screen.dart';
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> getRoutes() => {
         '/': (context) => const HomeScreen(),
-        '/chat': (context) => const ChatScreen(),
+        '/chat': (context) => const ChatScreen(), // routes
         '/contact': (context) => const ContactScreen()
       };
 }

@@ -7,7 +7,7 @@ import '../entities/message.dart';
 
 class ContactsModel extends ChangeNotifier {
   final List<Contact> _contacts = [amogus, war, secondOne, chatLessDude];
-  Contact? _selectedContact;
+  Contact? _selectedContact; // Consumer<T> and Selector<T,V>
 
   List<Contact> get contacts => _contacts;
 

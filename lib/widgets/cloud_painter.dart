@@ -15,7 +15,7 @@ class CloudPainter extends CustomPainter {
     final centerY = size.height / 2;
     final smaller =  (centerX > centerY)? centerY : centerX;
 
-    final path = Path()
+    final path = Path() // drawing a cloud
       ..quadraticBezierTo(
           centerX/4,  -smaller*0.66,
           centerX/2, -centerY*0.3)
@@ -37,5 +37,5 @@ class CloudPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false; // const
 }

@@ -8,7 +8,7 @@ import 'models/search_model.dart';
 
 void main() {
   runApp(
-    MultiProvider(providers: [
+    MultiProvider(providers: [ // multiProvider
       ChangeNotifierProvider(create: (_) => DarkModeModel()),
       ChangeNotifierProvider(create: (_) => SearchModel()),
       ChangeNotifierProvider(create: (_) => ContactsModel()),
@@ -21,7 +21,7 @@ class MobileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DarkModeModel>(
+    return Consumer<DarkModeModel>( // rebuilds everything!
       builder: (context, darkModeModel, child) => MaterialApp(
         theme: darkModeModel.isDark
             ? ThemeData.dark().copyWith(

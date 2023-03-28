@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class TelegramDrawer extends StatelessWidget {
   const TelegramDrawer({Key? key}) : super(key: key);
 
-  DarkModeModel provideDarkModeModel(BuildContext context){
+  DarkModeModel provideDarkModeModel(BuildContext context){ // using a function
     return Provider.of<DarkModeModel>(context, listen: false);
   }
 
@@ -40,6 +40,7 @@ class TelegramDrawer extends StatelessWidget {
             title: const Text("Settings"),
           ),
           ListTile(
+            // changes darkMode!
             onTap: provideDarkModeModel(context).switchDarkMode,
             leading: const Icon(Icons.nightlight_outlined),
             title: const Text("Night mode"),

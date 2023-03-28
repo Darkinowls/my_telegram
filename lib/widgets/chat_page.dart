@@ -18,7 +18,7 @@ class _ChatPageState extends State<ChatPage> {
   late final ContactsModel contactsModel;
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() { // using a local state
     super.didChangeDependencies();
     contactsModel = Provider.of<ContactsModel>(context, listen: false);
   }
@@ -42,7 +42,7 @@ class _ChatPageState extends State<ChatPage> {
         Flexible(
           child: Consumer<ContactsModel>(builder: (context, contactsM, _) {
             Chat chat = contactsM.selectedContact!.chat!;
-            return ListView.builder(
+            return ListView.builder( // rebuilds messages
                 reverse: true,
                 padding: const EdgeInsets.all(25),
                 itemCount: chat.messages.length,
@@ -86,7 +86,7 @@ class _ChatPageState extends State<ChatPage> {
                   offset: Offset(-10, 10),
                 )
               ]),
-              child: CustomPaint(
+              child: CustomPaint(  // a message is a cloud
                 painter: CloudPainter(context),
                 child: Stack(children: [
                   Container(
