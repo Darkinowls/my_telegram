@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_telegram/models/contacts_model.dart';
+
 import 'package:provider/provider.dart';
 
 import '../entities/abstract/chat.dart';
 import '../entities/message.dart';
-import '../models/search_model.dart';
+import '../providers/contacts_model.dart';
+import '../providers/search_model.dart';
 
 class ChatList extends StatefulWidget {
   const ChatList({Key? key}) : super(key: key);

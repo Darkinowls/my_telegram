@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_telegram/models/contacts_model.dart';
+
 import 'package:provider/provider.dart';
 
 import '../entities/contact.dart';
-import '../models/search_model.dart';
+import '../providers/contacts_model.dart';
+import '../providers/search_model.dart';
+
 
 class ContactList extends StatefulWidget {
   const ContactList({Key? key}) : super(key: key);

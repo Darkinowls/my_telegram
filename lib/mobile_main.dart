@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_telegram/models/dark_mode_model.dart';
+import 'package:my_telegram/providers/contacts_model.dart';
+import 'package:my_telegram/providers/dark_mode_model.dart';
+import 'package:my_telegram/providers/search_model.dart';
 import 'package:my_telegram/routing/apt_routes.dart';
 import 'package:provider/provider.dart';
 
-import 'models/contacts_model.dart';
-import 'models/search_model.dart';
+
 
 void main() {
   runApp(

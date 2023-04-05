@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../entities/abstract/chat.dart';
-import '../models/contacts_model.dart';
+
+import '../providers/contacts_model.dart';
 class ChatBar extends StatelessWidget {
 
   const ChatBar({Key? key})

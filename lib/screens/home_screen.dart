@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../entities/abstract/chat.dart';
-import '../models/search_model.dart';
+
+import '../providers/search_model.dart';
 import '../widgets/chat_list.dart';
 import '../widgets/contact_list.dart';
 import '../widgets/setting_page.dart';

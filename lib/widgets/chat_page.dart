@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../entities/abstract/chat.dart';
 import '../entities/message.dart';
-import '../models/contacts_model.dart';
+import '../providers/contacts_model.dart';
 import 'cloud_painter.dart';
 import 't_text_field.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_telegram/models/dark_mode_model.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/dark_mode_model.dart';
 
 class TelegramDrawer extends StatelessWidget {
   const TelegramDrawer({Key? key}) : super(key: key);
